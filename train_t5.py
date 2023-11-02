@@ -17,17 +17,15 @@ tokenizer = SentencePieceUnigramTokenizer(unk_token="<unk>", eos_token="</s>", p
 
 
 # Build an iterator over this dataset
-def batch_iterator(input_sentence_size=None):
-    if input_sentence_size is None:
-        input_sentence_size = len(dataset)
+def batch_iterator(sentence_size):
     batch_length = 100
-    for i in range(0, input_sentence_size, batch_length):
+    for i in range(0, sentence_size, batch_length):
         yield dataset[i: i + batch_length]["text"]
 
 
 # Train tokenizer
 tokenizer.train_from_iterator(
-    iterator=batch_iterator(input_sentence_size=input_sentence_size),
+    iterator=batch_iterator(sentence_size=input_sentence_size),
     vocab_size=vocab_size,
     show_progress=True,
 )
