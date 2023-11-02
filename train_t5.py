@@ -1,6 +1,7 @@
 from datasets import load_dataset
 from transformers import T5Config
 
+
 from t5_tokenizer_model import SentencePieceUnigramTokenizer
 
 vocab_size = 32_000
@@ -32,6 +33,9 @@ tokenizer.train_from_iterator(
 )
 
 # Save files to disk
-tokenizer.save("./sinhala-t5-base/tokenizer.json")
+tokenizer.save("sinhala-t5-base/tokenizer.json")
 config = T5Config.from_pretrained("google/t5-v1_1-base", vocab_size=tokenizer.get_vocab_size())
-config.save_pretrained("./sinhala-t5-base")
+config.save_pretrained("sinhala-t5-base")
+
+
+
