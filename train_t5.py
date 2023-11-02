@@ -10,14 +10,15 @@ input_sentence_size = None
 dataset = load_dataset("oscar-corpus/OSCAR-2201",
                        use_auth_token=True,  # required
                        name="si",
-                       streaming=True,  # optional
                        split="train")  # optional, but the dataset only has a train split
 
 tokenizer = SentencePieceUnigramTokenizer(unk_token="<unk>", eos_token="</s>", pad_token="<pad>")
 
 
 # Build an iterator over this dataset
-def batch_iterator(sentence_size):
+def batch_iterator(sentence_size=None):
+    if sentence_size is None:
+        sentence_size = len(dataset)
     batch_length = 100
     for i in range(0, sentence_size, batch_length):
         yield dataset[i: i + batch_length]["text"]
